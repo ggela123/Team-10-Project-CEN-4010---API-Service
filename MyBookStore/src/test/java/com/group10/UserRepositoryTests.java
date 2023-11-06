@@ -1,13 +1,17 @@
 package com.group10;
 
+import com.group10.book.Book;
 import com.group10.user.User;
 import com.group10.user.UserRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -45,6 +49,15 @@ public class UserRepositoryTests {
 
         assertThat(user).isNotNull();
 
+    }
+
+    @Test
+    public void testDelete() {
+        long userId = 6;
+        repo.deleteById(userId);
+
+        Optional<User> optionalUser = repo.findById(userId);
+        Assertions.assertThat(optionalUser).isNotPresent();
     }
 
 
