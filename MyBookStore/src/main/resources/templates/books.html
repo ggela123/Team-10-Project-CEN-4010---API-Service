@@ -38,7 +38,7 @@
                     <td>[[${book.ISBN}]]</td>
                     <td>[[${book.author}]]</td>
                     <td>[[${book.copiesSold}]]</td>
-                    <td>[[${book.description}]]</td>
+                    <td><span class="fade-text">[[${book.description}]]</span></td>
                     <td>[[${book.genre}]]</td>
                     <td>[[${book.name}]]</td>
                     <td>[[${book.price}]]</td>
@@ -47,6 +47,11 @@
                     <td>
                         <a class="h4 mr-3" th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
                         <a class="h4" th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
+                        <a class="h4" href="#" onclick="showDescription()">View Description</a>
+                        <div id="description-modal" style="display: none; border: 1px solid #000000;">
+                            <p th:text="${book.description}"></p>
+                            <a href="#" onclick="hideDescription()">Close</a>
+                        </div>
                     </td>
                 </tr>
             </th:block>
@@ -55,4 +60,25 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var fadeLimit = 50;
+        var effect = document.querySelectorAll('.fade-text');
+
+        effect.forEach(function(effect) {
+            var text = effect.textContent;
+            if (text.length > fadeLimit) {
+                effect.textContent = text.slice(0, fadeLimit) + '...';
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function showDescription() {
+        document.getElementById("description-modal").style.display = "block";
+    }
+    function hideDescription() {
+        document.getElementById("description-modal").style.display = "none";
+    }
+</script>
 </html>
