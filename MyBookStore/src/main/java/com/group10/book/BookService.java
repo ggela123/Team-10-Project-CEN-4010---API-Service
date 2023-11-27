@@ -19,7 +19,7 @@ public class BookService {
         repo.save(book);
     }
 
-    public Book get(Integer id) throws BookNotFoundException {
+    public Book get(Long id) throws BookNotFoundException {
         Optional<Book> result = repo.findById(id);
         if(result.isPresent()) {
             return result.get();
@@ -27,7 +27,7 @@ public class BookService {
         throw new BookNotFoundException("Could not find any books with ID: " + id);
     }
 
-    public void delete(Integer id) throws BookNotFoundException {
+    public void delete(Long id) throws BookNotFoundException {
         Long count =  repo.countById(id);
         if (count == null || count == 0) {
             throw new BookNotFoundException("Could not find any books with ID: " + id);

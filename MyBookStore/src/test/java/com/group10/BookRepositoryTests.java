@@ -50,7 +50,7 @@ public class BookRepositoryTests {
 
     @Test
     public void testUpdate() {
-        Integer bookId = 1;
+        long bookId = 1;
         Optional<Book> optionalBook = repo.findById(bookId);
         Book book = optionalBook.get();
         Integer newValue = book.getCopiesSold() + 1;
@@ -64,7 +64,7 @@ public class BookRepositoryTests {
 
     @Test
     public void testGet() {
-        Integer bookId = 2;
+        long bookId = 2;
         Optional<Book> optionalBook = repo.findById(bookId);
         Assertions.assertThat(optionalBook).isPresent();
         System.out.println(optionalBook.get());
@@ -72,7 +72,7 @@ public class BookRepositoryTests {
 
     @Test
     public void testDelete() {
-        Integer bookId = 2;
+        long bookId = 2;
         repo.deleteById(bookId);
 
         Optional<Book> optionalBook = repo.findById(bookId);

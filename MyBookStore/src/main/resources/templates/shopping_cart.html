@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <div>
+        <h2>Your shopping cart:</h2>
+        </br>
+    </div>
+    <div class="row m-1">
+        <div class="col-sm-8">
+        <th:block th:each="item, status : ${cartItems}">
+            <div class="row border rounded" th:with="book = ${item.book}"
+                    th:id="'row' + ${status.count}">
+                <div class="col-1">
+                    <div>[[${status.count}]]</div>
+                    <div>
+                        <button type="button" class="btn btn-link link-remove"
+                                th:rowNumber="${status.count}"
+                                th:href="@{'/cart/remove/' + ${book.id}}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <a>
+                            <b>[[${book.name}]]</b>
+                        </a>
+                    </div>
+                    <div th:replace="quantity_control :: quantity_control(${item.quantity}, ${item.book.id})">Quantity</div>
+                    <div>
+                        <span>X</span>
+                        <span>[[${book.price}]]</span>
+                    </div>
+                    <div>
+                        <span>=&nbsp;</span><span class="h4">$</span>
+                        <span th:id="'subtotal' + ${book.id}"
+                              class="h4 productSubtotal">[[${item.subtotal}]]</span>
+                    </div>
+                </div>
+            </div>
+        <div class="row m-1">&nbsp;</div>
+        </th:block>
+        </div>
+
+
+        <div class="col-sm-4" th:unless="${#lists.isEmpty(cartItems)}">
+            <div>
+                <span class="h3">Estimated Total:</span>
+            </div>
+            <div class="mt-2">
+                <span class="h2" id="totalAmount"></span>
+            </div>
+            <div class="mt-2">
+                <button class="btn btn-danger p-3 mt-2">Check out</button>
+            </div>
+        </div>
+        <h3><a th:href="@{/books}">Go back</a></h3>
+    </div>
+
+    <div th:if="${#lists.isEmpty(cartItems)}">
+        <h3>Your cart is empty</h3>
+        <h3><a th:href="@{/books}">Go back</a></h3>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        contextPath = "[[@{/}]]";
+        var csrfHeaderName = "[[${_csrf.headerName}]]";
+        var csrfValue = "[[${_csrf.token}]]";
+    </script>
+    <script th:src="@{shopping_cart.js}"></script>
+    <div th:replace="standard_modal :: standard_modal">Standard Modal Dialog</div>
+</body>
+</html>
