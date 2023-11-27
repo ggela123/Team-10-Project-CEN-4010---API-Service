@@ -39,7 +39,7 @@ public class BookController {
 
 
     @GetMapping("/books/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+    public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes ra) {
         try {
             Book book = service.get(id);
             model.addAttribute("book", book);
@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @GetMapping("/books/delete/{id}")
-    public String deleteBook(@PathVariable("id") Integer id, RedirectAttributes ra) {
+    public String deleteBook(@PathVariable("id") Long id, RedirectAttributes ra) {
         try {
             service.delete(id);
             ra.addFlashAttribute("message", "The book ID " + id + " has been deleted.");

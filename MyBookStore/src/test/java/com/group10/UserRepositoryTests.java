@@ -53,7 +53,7 @@ public class UserRepositoryTests {
 
     @Test
     public void testDelete() {
-        long userId = 6;
+        long userId = 16;
         repo.deleteById(userId);
 
         Optional<User> optionalUser = repo.findById(userId);
